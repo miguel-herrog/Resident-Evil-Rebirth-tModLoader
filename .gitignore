@@ -1,0 +1,12 @@
+# Carpetas de compilación de tModLoader y .NET
+bin/
+obj/
+
+# Archivos de usuario de Visual Studio / VS Code
+.vs/
+.vscode/
+*.user
+
+# Archivos temporales del sistema operativo
+.DS_Store
+Thumbs.db

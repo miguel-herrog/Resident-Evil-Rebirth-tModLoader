@@ -1,0 +1,3 @@
+displayName = Resident Evil Rebirth
+author = Miguel Hernandez
+version = 0.1

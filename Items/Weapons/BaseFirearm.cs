@@ -62,14 +62,18 @@ namespace ResidentEvilRebirth.Items.Weapons
         }
 
         // Método custom para iniciar la recarga manual o automática
-        public void StartReload()
+        public bool StartReload()
         {
             if (!isReloading && currentAmmo < maxAmmo)
             {
                 isReloading = true;
                 reloadTimer = 0;
+                return true;
                 // Aquí añadiremos el sonido de inicio de recarga
+
             }
+            return false;
         }
+        
     }
 }

@@ -20,6 +20,10 @@ namespace ResidentEvilRebirth.Items.Weapons
         public virtual int TargetAmmoType => 0; // 0 por defecto (forzará error si el arma hija no lo define)
         public virtual int MagazineProjType => ModContent.ProjectileType<Projectiles.EmptyMagazineProj>();
         public virtual int ShellProjType => ModContent.ProjectileType<Projectiles.PistolShellProj>();
+        public virtual bool EjectsCasingsOnFire => true;      // ¿Suelta casquillos al disparar?
+        public virtual int ShellsEjectedOnReload => 1;       // ¿Cuántos objetos caen al recargar?
+        public virtual int BulletPenetration => 1;
+        public virtual float RecoilForce => 0f; // Por defecto no hay empuje
 
         // Sellamos el SetDefaults de tModLoader para proteger nuestra lógica.
         // Obligamos a las armas hijas a usar SafeSetDefaults().
@@ -65,38 +69,20 @@ namespace ResidentEvilRebirth.Items.Weapons
         public override bool? UseItem(Player player)
         {
             currentAmmo--;
-            // --- VFX DE DISPARO ---
             if (player != null)
             {
-                // Dirección del jugador (-1 izquierda, 1 derecha)
                 float directionFactor = player.direction;
-                
-                // OFFSET 1: Punta del cañón (Muzzle Flash).
-                // Aproximadamente 32 píxeles adelante (cañón largo) y 4 hacia abajo (mano).
                 Vector2 barrelPosition = player.Center + new Vector2(directionFactor * 32f, 4f);
 
-                for (int i = 0; i < 1; i++) // Generamos 3 partículas de fuego
-                {
-                    Dust.NewDust(barrelPosition, 4, 4, DustID.Torch, directionFactor * 2f, -1f, 100, default, 1.5f);
-                }
-                // Añadimos humo ligero también en el cañón
+                // VFX de humo
                 Dust.NewDust(barrelPosition, 4, 4, DustID.Smoke, directionFactor * 1f, -0.5f, 100, default, 0.8f);
 
-                // OFFSET 2: Recámara de expulsión (Casquillo).
-                // Aproximadamente 12 píxeles adelante (centro del cuerpo del arma) y 2 hacia abajo.
-                Vector2 ejectionPosition = player.Center + new Vector2(directionFactor * 12f, 2f);
-
-                // Velocidad del casquillo: Salta hacia arriba (-4f a -6f) y hacia atrás (-direction * 3f)
-                Vector2 shellVelocity = new Vector2(-directionFactor * 3f, -Main.rand.NextFloat(4f, 6f));
-
-                // Instanciamos el casquillo físico
-                Projectile.NewProjectile(
-                    player.GetSource_ItemUse(Item), 
-                    ejectionPosition, 
-                    shellVelocity, 
-                    ShellProjType,
-                    0, 0, player.whoAmI
-                );
+                if (EjectsCasingsOnFire)
+                {
+                    Vector2 ejectionPosition = player.Center + new Vector2(directionFactor * 12f, 2f);
+                    Vector2 shellVelocity = new Vector2(-directionFactor * 3f, -Main.rand.NextFloat(4f, 6f));
+                    Projectile.NewProjectile(player.GetSource_ItemUse(Item), ejectionPosition, shellVelocity, ShellProjType, 0, 0, player.whoAmI);
+                }
             }
             return true;
         }
@@ -138,30 +124,21 @@ namespace ResidentEvilRebirth.Items.Weapons
                 // 3. Si encontramos AL MENOS una bala, procedemos a recargar
                 if (bulletsFound > 0)
                 {
-                    isReloading = true;           
+                    isReloading = true;
                     reloadTimer = 0;
-                    currentAmmo += bulletsFound;  // Sumamos las balas que hemos robado del inventario
-                    Color textColor = new Color(255, 200, 0); 
-                    CombatText.NewText(player.Hitbox, textColor, "Reloading!");
-                    // --- FÍSICA DEL CARGADOR ---
+                    currentAmmo += bulletsFound;
+                    
                     if (player != null)
                     {
-                        Vector2 ejectVelocity = new Vector2(player.direction * Main.rand.NextFloat(0.2f, 0.8f), Main.rand.NextFloat(1f, 3f));
-                        // Aplicamos el Offset mejorado para que no lo tape el jugador
-                        Vector2 spawnPosition = player.Center + new Vector2(player.direction * 24f, 8f);
+                        // BUCLE DE EXPULSIÓN
+                        for (int i = 0; i < ShellsEjectedOnReload; i++)
+                        {
+                            // Añadimos un poco de aleatoriedad a la velocidad para que no salgan todos pegados
+                            Vector2 ejectVelocity = new Vector2(player.direction * Main.rand.NextFloat(-1f, 2f), Main.rand.NextFloat(1f, 4f));
+                            Vector2 spawnPosition = player.Center + new Vector2(player.direction * 10f, 8f);
 
-                        // Efecto de humo
-                        Dust.NewDust(spawnPosition, 4, 4, Terraria.ID.DustID.Smoke, 0f, -1f, 100, default, 1f);
-
-                        Projectile.NewProjectile(
-                            player.GetSource_ItemUse(Item), 
-                            spawnPosition,                  
-                            ejectVelocity,                  
-                            MagazineProjType,
-                            0,                              
-                            0,                              
-                            player.whoAmI                   
-                        );
+                            Projectile.NewProjectile(player.GetSource_ItemUse(Item), spawnPosition, ejectVelocity, MagazineProjType, 0, 0, player.whoAmI);
+                        }
                     }
                     return true;
                 }
@@ -188,6 +165,32 @@ namespace ResidentEvilRebirth.Items.Weapons
             Vector2 textPos = position + new Vector2(-12f, 4f); 
 
             Terraria.Utils.DrawBorderString(spriteBatch, ammoText, textPos, textColor, ammoScale);
+        }
+
+        public override void ModifyShootStats(Player player, ref Vector2 position, ref Vector2 velocity, ref int type, ref int damage, ref float knockback)
+        {
+            // Este método se ejecuta justo antes de crear la bala. 
+        }
+
+        // Usamos este hook para capturar la bala recién creada y cambiarle la penetración
+        public override bool Shoot(Player player, Terraria.DataStructures.EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback)
+        {
+            // --- FÍSICA DE RETROCESO 360 GRADOS ---
+            if (RecoilForce > 0f)
+            {
+                // 'velocity' es la trayectoria exacta de la bala.
+                Vector2 recoilDir = velocity;
+                recoilDir.Normalize(); // Lo reducimos a longitud 1 para tener solo la dirección pura
+
+                // Empujamos al jugador en la dirección opuesta al cursor (X e Y)
+                player.velocity -= recoilDir * RecoilForce;
+            }
+
+            // --- CREACIÓN DE LA BALA ---
+            int p = Projectile.NewProjectile(source, position, velocity, type, damage, knockback, player.whoAmI);
+            Main.projectile[p].penetrate = BulletPenetration; 
+            
+            return false; 
         }
 
         // Este método nos permite modificar el texto que sale al pasar el ratón por el arma

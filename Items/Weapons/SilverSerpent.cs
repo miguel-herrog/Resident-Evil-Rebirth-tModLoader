@@ -1,14 +1,16 @@
 using Terraria;
 using Terraria.ID;
+using Microsoft.Xna.Framework;
 using Terraria.ModLoader;
 
 namespace ResidentEvilRebirth.Items.Weapons
 {
     // Heredamos de NUESTRA clase.
-    public class ColtSAA : BaseFirearm 
+    public class SilverSerpent : BaseFirearm 
     {
         // El nombre y la descripción se manejan en archivos de localización (.hjson).
-        
+        public override int TargetAmmoType => ModContent.ItemType<Ammo.MagnumRounds>();
+
         public override void SafeSetDefaults()
         {
             // Configuración de nuestra lógica personalizada (BaseFirearm)
@@ -29,7 +31,7 @@ namespace ResidentEvilRebirth.Items.Weapons
             Item.rare = ItemRarityID.Green;
             Item.UseSound = SoundID.Item4; // Sonido de disparo estándar
             Item.autoReuse = false; // Hay que hacer clic por cada tiro
-
+            Item.scale = 0.75f; // Reduce el tamaño del sprite en la mano a un 75%.
             // Configuración de proyectiles
             Item.shoot = ProjectileID.Bullet; // Dispara balas normales por ahora
             Item.shootSpeed = 12f;  // Velocidad de la bala
@@ -37,6 +39,13 @@ namespace ResidentEvilRebirth.Items.Weapons
             // ILe decimos a Terraria que NO consuma balas del inventario,
             // porque estamos controlando la munición internamente con currentAmmo.
             Item.useAmmo = AmmoID.None; 
+        }
+
+        public override Vector2? HoldoutOffset()
+        {
+            // Eje X: Positivo aleja el arma hacia adelante. Negativo la echa hacia atrás (más pegada al cuerpo).
+            // Eje Y: Positivo baja el arma. Negativo la sube.
+            return new Vector2(-6f, 2f); 
         }
     }
 }

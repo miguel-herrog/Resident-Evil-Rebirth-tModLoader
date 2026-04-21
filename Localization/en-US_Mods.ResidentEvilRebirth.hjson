@@ -1,11 +1,11 @@
 Items: {
-	ColtSAA: {
-		DisplayName: Colt S A A
+	MagnumRounds: {
+		DisplayName: Magnum Rounds
 		Tooltip: ""
 	}
 
-	Ammo9mm: {
-		DisplayName: Ammo9mm
+	SilverSerpent: {
+		DisplayName: Silver Serpent
 		Tooltip: ""
 	}
 }

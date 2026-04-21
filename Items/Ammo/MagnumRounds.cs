@@ -4,7 +4,7 @@ using Terraria.ModLoader;
 
 namespace ResidentEvilRebirth.Items.Ammo
 {
-    public class Ammo9mm : ModItem
+    public class MagnumRounds : ModItem
     {
         public override void SetDefaults()
         {

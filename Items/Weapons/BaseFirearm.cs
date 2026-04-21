@@ -17,6 +17,9 @@ namespace ResidentEvilRebirth.Items.Weapons
         public bool isReloading = false;
         public int reloadTime; // 60 frames = 1 segundo
         private int reloadTimer = 0;
+        public virtual int TargetAmmoType => 0; // 0 por defecto (forzará error si el arma hija no lo define)
+        public virtual int MagazineProjType => ModContent.ProjectileType<Projectiles.EmptyMagazineProj>();
+        public virtual int ShellProjType => ModContent.ProjectileType<Projectiles.PistolShellProj>();
 
         // Sellamos el SetDefaults de tModLoader para proteger nuestra lógica.
         // Obligamos a las armas hijas a usar SafeSetDefaults().
@@ -91,7 +94,7 @@ namespace ResidentEvilRebirth.Items.Weapons
                     player.GetSource_ItemUse(Item), 
                     ejectionPosition, 
                     shellVelocity, 
-                    ModContent.ProjectileType<Projectiles.PistolShellProj>(),
+                    ShellProjType,
                     0, 0, player.whoAmI
                 );
             }
@@ -113,8 +116,8 @@ namespace ResidentEvilRebirth.Items.Weapons
                 {
                     Item invItem = player.inventory[i];
 
-                    // Si encontramos nuestra munición de 9mm
-                    if (invItem.type == ModContent.ItemType<Ammo.Ammo9mm>() && invItem.stack > 0)
+                    // Si encontramos munición
+                    if (invItem.type == TargetAmmoType && invItem.stack > 0)                    
                     {
                         // Si el montón tiene más o igual de las que necesitamos
                         if (invItem.stack >= (bulletsNeeded - bulletsFound))
@@ -154,7 +157,7 @@ namespace ResidentEvilRebirth.Items.Weapons
                             player.GetSource_ItemUse(Item), 
                             spawnPosition,                  
                             ejectVelocity,                  
-                            ModContent.ProjectileType<Projectiles.EmptyMagazineProj>(), 
+                            MagazineProjType,
                             0,                              
                             0,                              
                             player.whoAmI                   

@@ -3,6 +3,16 @@ Items: {
 		DisplayName: Colt S A A
 		Tooltip: ""
 	}
+
+	Ammo9mm: {
+		DisplayName: Ammo9mm
+		Tooltip: ""
+	}
 }
 
 "Keybinds.Reload Weapon.DisplayName": Reload  Weapon
+
+Projectiles: {
+	EmptyMagazineProj.DisplayName: Empty Magazine Proj
+	PistolShellProj.DisplayName: Pistol Shell Proj
+}

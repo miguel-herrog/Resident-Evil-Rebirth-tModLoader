@@ -21,13 +21,8 @@ namespace ResidentEvilRebirth.Players
                 // Si lo es, C# automáticamente lo guarda en la variable temporal 'firearm'.
                 if (heldItem.ModItem is BaseFirearm firearm)
                 {
-                    // Solo si StartReload devuelve 'true', generamos el texto visual
-                    if (firearm.StartReload()){
-                        // Creamos un texto flotante sobre la hitbox del jugador.
-                        // Color(R, G, B). En este caso: 255, 200, 0 es un Amarillo/Naranja de alerta.
-                        Color textColor = new Color(255, 200, 0); 
-                        CombatText.NewText(Player.Hitbox, textColor, "Reloading!");
-                    }
+                    firearm.StartReload(Player);
+
                 }                      
             }
         }

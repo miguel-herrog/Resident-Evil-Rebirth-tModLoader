@@ -24,10 +24,10 @@ namespace ResidentEvilRebirth.Items.Weapons
             Item.useAnimation = 20; // Cuánto dura la animación (suele ser igual a useTime)
             Item.useStyle = ItemUseStyleID.Shoot; // Estilo de uso: pistola
             Item.noMelee = true;    // No hace daño cuerpo a cuerpo
-            Item.knockBack = 2f;    // Empuje ligero
+            Item.knockBack = 5f;    // Empuje ligero
             Item.value = Item.buyPrice(silver: 50);
             Item.rare = ItemRarityID.Green;
-            Item.UseSound = SoundID.Item11; // Sonido de disparo estándar
+            Item.UseSound = SoundID.Item4; // Sonido de disparo estándar
             Item.autoReuse = false; // Hay que hacer clic por cada tiro
 
             // Configuración de proyectiles

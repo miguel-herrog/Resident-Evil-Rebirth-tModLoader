@@ -3,7 +3,7 @@ using Terraria.ModLoader;
 using Terraria.Audio;
 using Microsoft.Xna.Framework;
 
-namespace ResidentEvilRebirth.Items.Projectiles
+namespace ResidentEvilRebirth.Projectiles
 {
     public class PistolShellProj : ModProjectile
     {

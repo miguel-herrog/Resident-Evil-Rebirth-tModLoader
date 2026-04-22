@@ -8,6 +8,21 @@ Items: {
 		DisplayName: Silver Serpent
 		Tooltip: ""
 	}
+
+	ShotgunShells: {
+		DisplayName: Shotgun Shells
+		Tooltip: ""
+	}
+
+	RiotGun: {
+		DisplayName: Riot Gun
+		Tooltip: ""
+	}
+
+	AssaultShotgun: {
+		DisplayName: Assault Shotgun
+		Tooltip: ""
+	}
 }
 
 "Keybinds.Reload Weapon.DisplayName": Reload  Weapon

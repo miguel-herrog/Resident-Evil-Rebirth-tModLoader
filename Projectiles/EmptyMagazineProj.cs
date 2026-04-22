@@ -2,7 +2,7 @@ using Terraria;
 using Terraria.ModLoader;
 using Microsoft.Xna.Framework;
 
-namespace ResidentEvilRebirth.Items.Projectiles
+namespace ResidentEvilRebirth.Projectiles
 {
     public class EmptyMagazineProj : ModProjectile
     {

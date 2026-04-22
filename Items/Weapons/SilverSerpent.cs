@@ -22,32 +22,33 @@ namespace ResidentEvilRebirth.Items.Weapons
 
         public override void SafeSetDefaults()
         {
-            // --- ESTADÍSTICAS DEL MAGNUM ---
-            maxAmmo = 6;            // Un tambor de revólver tradicional tiene 6 balas.
-            reloadTime = 192.96f;       // Es una recarga lenta y tensa.
+            // --- MAGNUM STATISTICS ---
+            maxAmmo = 6;            // A traditional revolver cylinder holds 6 rounds.
+            reloadTime = 192.96f;       // Slow and tense reload.
 
-            Item.damage = 85;       // Daño MASIVO (una pistola normal en este punto del juego tendría 15-20)
+            Item.damage = 85;       // MASSIVE damage (a normal pistol at this game stage would have 15-20)
             Item.DamageType = DamageClass.Ranged; 
             Item.width = 32;        
             Item.height = 32;       
             
-            // --- GAME FEEL DEL DISPARO ---
-            Item.useTime = 45;      // Muy lento. Tarda casi un segundo entre disparo y disparo.
+            // --- SHOOTING GAME FEEL ---
+            Item.useTime = 45;      // Very slow. Almost a second between shots.
             Item.useAnimation = 45; 
             Item.useStyle = ItemUseStyleID.Shoot; 
             Item.noMelee = true;    
-            Item.knockBack = 9f;    // Empuje bestial que frena a los enemigos en seco.
-            Item.value = Item.buyPrice(gold: 5); // Es un arma muy cara/rara.
-            Item.rare = ItemRarityID.LightRed;   // Color de rareza más alto.
+            Item.knockBack = 9f;    // Beastly knockback that stops enemies dead.
+            Item.value = Item.buyPrice(gold: 5); 
+            Item.rare = ItemRarityID.LightRed;   // Highest rarity color.
             
             Item.UseSound = SoundID.Item41; 
             Item.autoReuse = false; 
 
             Item.shoot = ProjectileID.Bullet; 
-            Item.shootSpeed = 16f;  // La bala viaja muchísimo más rápido por la potencia de la pólvora.
+            Item.shootSpeed = 16f;  // Bullet travels much faster due to powder power.
             
             Item.useAmmo = AmmoID.None; 
-            Item.scale = 0.75f;     // Tu ajuste de tamaño visual
+            Item.scale = 0.75f;     // Visual size adjustment
+     
         }
 
         public override Vector2? HoldoutOffset()

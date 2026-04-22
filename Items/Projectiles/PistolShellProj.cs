@@ -1,5 +1,6 @@
 using Terraria;
 using Terraria.ModLoader;
+using Terraria.Audio;
 using Microsoft.Xna.Framework;
 
 namespace ResidentEvilRebirth.Items.Projectiles
@@ -41,9 +42,19 @@ namespace ResidentEvilRebirth.Items.Projectiles
                 
                 Projectile.velocity.X *= 0.8f; 
                 
-                // TODO: Aquí añadiremos el sonido custom de casquillo metálico chocando
+                // --- SONIDO DE IMPACTO ---
+                // Solo suena si el impacto es lo suficientemente fuerte (evita que suene infinitamente al rodar)
+                if (System.Math.Abs(oldVelocity.Y) > 1.5f)
+                {
+                    SoundStyle casingSound = new SoundStyle("ResidentEvilRebirth/Sounds/Custom/magnumShells")
+                    {
+                        Volume = 0.4f,       // Lo ponemos un poco bajito para que no sature
+                        MaxInstances = 10,   // Permite que suenen hasta 10 a la vez
+                        PitchVariance = 0.3f // ¡EL TRUCO MÁGICO! Altera el tono en cada rebote
+                    };
+                    SoundEngine.PlaySound(casingSound, Projectile.Center);
+                }            
             }
-            
             return false; 
         }
     }

@@ -1,6 +1,7 @@
 using Terraria;
 using Terraria.ID;
 using Microsoft.Xna.Framework;
+using Terraria.Audio;
 using Terraria.ModLoader;
 
 namespace ResidentEvilRebirth.Items.Weapons
@@ -17,12 +18,13 @@ namespace ResidentEvilRebirth.Items.Weapons
         // Al recargar un revólver, lo que caen son casquillos, no un cargador:
         public override int MagazineProjType => ModContent.ProjectileType<Projectiles.PistolShellProj>();
         public override float RecoilForce => 5.5f;
+        public override SoundStyle? ReloadSound => new SoundStyle("ResidentEvilRebirth/Sounds/Custom/magnumReload");
 
         public override void SafeSetDefaults()
         {
             // --- ESTADÍSTICAS DEL MAGNUM ---
             maxAmmo = 6;            // Un tambor de revólver tradicional tiene 6 balas.
-            reloadTime = 120;       // 120 frames = 2 segundos completos. Es una recarga lenta y tensa.
+            reloadTime = 192.96f;       // Es una recarga lenta y tensa.
 
             Item.damage = 85;       // Daño MASIVO (una pistola normal en este punto del juego tendría 15-20)
             Item.DamageType = DamageClass.Ranged; 

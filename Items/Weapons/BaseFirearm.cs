@@ -3,6 +3,7 @@ using Terraria.ModLoader;
 using Microsoft.Xna.Framework;
 using System.Collections.Generic;
 using Microsoft.Xna.Framework.Graphics;
+using Terraria.Audio;
 using ResidentEvilRebirth.Items.Ammo;
 using Terraria.ID;
 
@@ -15,7 +16,7 @@ namespace ResidentEvilRebirth.Items.Weapons
         public int maxAmmo;
         public int currentAmmo;
         public bool isReloading = false;
-        public int reloadTime; // 60 frames = 1 segundo
+        public float reloadTime; // 60 frames = 1 segundo
         private int reloadTimer = 0;
         public virtual int TargetAmmoType => 0; // 0 por defecto (forzará error si el arma hija no lo define)
         public virtual int MagazineProjType => ModContent.ProjectileType<Projectiles.EmptyMagazineProj>();
@@ -24,6 +25,7 @@ namespace ResidentEvilRebirth.Items.Weapons
         public virtual int ShellsEjectedOnReload => 1;       // ¿Cuántos objetos caen al recargar?
         public virtual int BulletPenetration => 1;
         public virtual float RecoilForce => 0f; // Por defecto no hay empuje
+        public virtual SoundStyle? ReloadSound => null;
 
         // Sellamos el SetDefaults de tModLoader para proteger nuestra lógica.
         // Obligamos a las armas hijas a usar SafeSetDefaults().
@@ -127,6 +129,11 @@ namespace ResidentEvilRebirth.Items.Weapons
                     isReloading = true;
                     reloadTimer = 0;
                     currentAmmo += bulletsFound;
+
+                    if (ReloadSound.HasValue)
+                    {
+                        SoundEngine.PlaySound(ReloadSound.Value, player.Center);
+                    }
                     
                     if (player != null)
                     {

@@ -158,7 +158,7 @@ namespace ResidentEvilRebirth.Items.Weapons
         {
             float ammoScale = 0.5f; // Escala por defecto (en mochila)
 
-            // Comprobamos si el ítem que se está dibujando (this.Item) 
+            // Comprobamos si el ítem que se está dibujando (this.Item)
             // es el mismo ítem que el jugador local tiene seleccionado en su barra.
             if (Main.LocalPlayer.inventory[Main.LocalPlayer.selectedItem] == Item)
             {
@@ -167,9 +167,9 @@ namespace ResidentEvilRebirth.Items.Weapons
 
             string ammoText = currentAmmo.ToString();
             Color textColor = currentAmmo == 0 ? Color.Red : Color.White;
-            
+
             // Ajuste leve de posición para la escala más grande
-            Vector2 textPos = position + new Vector2(-12f, 4f); 
+            Vector2 textPos = position + new Vector2(-12f, 4f);
 
             Terraria.Utils.DrawBorderString(spriteBatch, ammoText, textPos, textColor, ammoScale);
         }

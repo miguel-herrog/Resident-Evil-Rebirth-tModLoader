@@ -20,7 +20,7 @@ namespace ResidentEvilRebirth.Projectiles.Shells
 
         public override void AI()
         {
-            Projectile.velocity.Y += 0.25f; // Gravedad un pelín más fuerte por ser pesado
+            Projectile.velocity.Y += 0.2f; // Gravedad un pelín más fuerte por ser pesado
             Projectile.velocity.X *= 0.99f; // Menos fricción en el aire para que vuele más
 
             // Rota súper rápido en el aire según su velocidad horizontal (¡está girando a 1000 RPM!)

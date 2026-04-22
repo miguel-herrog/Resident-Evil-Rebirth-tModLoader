@@ -17,7 +17,7 @@ namespace ResidentEvilRebirth.Items.Weapons.Shotguns
         public override float RecoilForce => 2f;              // Buen retroceso, pero menos que el Magnum
         
         // Reutilizamos el casquillo de pistola por ahora (puedes crear uno rojo más adelante)
-        public override int ShellProjType => ModContent.ProjectileType<Projectiles.Shells.PistolShellProj>();
+        public override int ShellProjType => ModContent.ProjectileType<Projectiles.Shells.ShotgunShellProj>();
 
         public override void SafeSetDefaults()
         {

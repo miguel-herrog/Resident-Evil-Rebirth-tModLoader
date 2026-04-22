@@ -14,11 +14,6 @@ Items: {
 		Tooltip: ""
 	}
 
-	RiotGun: {
-		DisplayName: Riot Gun
-		Tooltip: ""
-	}
-
 	AssaultShotgun: {
 		DisplayName: Assault Shotgun
 		Tooltip: ""

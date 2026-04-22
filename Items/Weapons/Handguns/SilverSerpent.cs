@@ -4,7 +4,7 @@ using Microsoft.Xna.Framework;
 using Terraria.Audio;
 using Terraria.ModLoader;
 
-namespace ResidentEvilRebirth.Items.Weapons
+namespace ResidentEvilRebirth.Items.Weapons.Handguns
 {
     // Heredamos de NUESTRA clase.
     public class SilverSerpent : BaseFirearm 
@@ -16,7 +16,7 @@ namespace ResidentEvilRebirth.Items.Weapons
         public override int BulletPenetration => 3;            // Cada bala atraviesa a 3 enemigos
         
         // Al recargar un revólver, lo que caen son casquillos, no un cargador:
-        public override int MagazineProjType => ModContent.ProjectileType<Projectiles.PistolShellProj>();
+        public override int MagazineProjType => ModContent.ProjectileType<Projectiles.Shells.PistolShellProj>();
         public override float RecoilForce => 5.5f;
         public override SoundStyle? ReloadSound => new SoundStyle("ResidentEvilRebirth/Sounds/Custom/magnumReload");
 

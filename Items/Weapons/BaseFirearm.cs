@@ -20,7 +20,7 @@ namespace ResidentEvilRebirth.Items.Weapons
         private int reloadTimer = 0;
         public virtual int TargetAmmoType => 0; // 0 por defecto (forzará error si el arma hija no lo define)
         public virtual int MagazineProjType => ModContent.ProjectileType<Projectiles.EmptyMagazineProj>();
-        public virtual int ShellProjType => ModContent.ProjectileType<Projectiles.PistolShellProj>();
+        public virtual int ShellProjType => ModContent.ProjectileType<Projectiles.Shells.PistolShellProj>();
         public virtual bool EjectsCasingsOnFire => true;      // ¿Suelta casquillos al disparar?
         public virtual int ShellsEjectedOnReload => 1;       // ¿Cuántos objetos caen al recargar?
         public virtual int BulletPenetration => 1;

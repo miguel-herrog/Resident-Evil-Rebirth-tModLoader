@@ -48,9 +48,9 @@ namespace ResidentEvilRebirth.Projectiles.Shells
                 {
                     SoundStyle casingSound = new SoundStyle("ResidentEvilRebirth/Sounds/Custom/magnumShells")
                     {
-                        Volume = 0.4f,       // Lo ponemos un poco bajito para que no sature
+                        Volume = 0.05f,       // Lo ponemos un poco bajito para que no sature
                         MaxInstances = 10,   // Permite que suenen hasta 10 a la vez
-                        PitchVariance = 0.3f // ¡EL TRUCO MÁGICO! Altera el tono en cada rebote
+                        PitchVariance = 0.3f // Altera el tono en cada rebote
                     };
                     SoundEngine.PlaySound(casingSound, Projectile.Center);
                 }

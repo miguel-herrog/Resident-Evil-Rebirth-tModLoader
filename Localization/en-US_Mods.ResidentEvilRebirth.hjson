@@ -18,6 +18,16 @@ Items: {
 		DisplayName: Assault Shotgun
 		Tooltip: ""
 	}
+
+	SamuraiEdge: {
+		Tooltip: ""
+		DisplayName: Samurai Edge
+	}
+
+	Ammo9mm: {
+		DisplayName: Ammo9mm
+		Tooltip: ""
+	}
 }
 
 "Keybinds.Reload Weapon.DisplayName": Reload  Weapon
@@ -25,4 +35,5 @@ Items: {
 Projectiles: {
 	EmptyMagazineProj.DisplayName: Empty Magazine Proj
 	PistolShellProj.DisplayName: Pistol Shell Proj
+	ShotgunShellProj.DisplayName: Shotgun Shell Proj
 }

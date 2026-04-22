@@ -156,20 +156,14 @@ namespace ResidentEvilRebirth.Items.Weapons
         // Este método nos permite dibujar cosas "encima" del icono del arma en el inventario/barra
         public override void PostDrawInInventory(SpriteBatch spriteBatch, Vector2 position, Rectangle frame, Color drawColor, Color itemColor, Vector2 origin, float scale)
         {
-            float ammoScale = 0.5f; // Escala por defecto (en mochila)
-
-            // Comprobamos si el ítem que se está dibujando (this.Item)
-            // es el mismo ítem que el jugador local tiene seleccionado en su barra.
-            if (Main.LocalPlayer.inventory[Main.LocalPlayer.selectedItem] == Item)
-            {
-                ammoScale = 0.8f; // Escala grande (en mano)
-            }
+            // Escala unificada fija (cámbiala si la quieres más grande o pequeña)
+            float ammoScale = 0.6f; 
 
             string ammoText = currentAmmo.ToString();
             Color textColor = currentAmmo == 0 ? Color.Red : Color.White;
-
-            // Ajuste leve de posición para la escala más grande
-            Vector2 textPos = position + new Vector2(-12f, 4f);
+            
+            // Posición anclada a la esquina
+            Vector2 textPos = position + new Vector2(-12f, 4f); 
 
             Terraria.Utils.DrawBorderString(spriteBatch, ammoText, textPos, textColor, ammoScale);
         }
